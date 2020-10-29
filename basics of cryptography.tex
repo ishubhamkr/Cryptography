@@ -1,0 +1,198 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\newcommand\tab[1][3cm]{\hspace*{#1}}
+\newtheorem{defn}{Definition} [section]
+\newtheorem{ex}{Example}[section]
+\title{Chapter-2 "Basics of Crptography"}
+\author{Shubham Kumar\thanks{Mtech-1st yr: Information Security, Atal Bihari Vajpayee Indian Institute of Information Technology and Management, Gwalior, India-474015} }
+\date{October 2020}
+
+\begin{document}
+
+\maketitle
+
+Note: Cryptography is a method of protecting information and communications through the use of codes, so that only those for whom the information is intended can read and process it.
+\\
+\section{Symmetric Cipher Model:-}
+A symmetric encryption scheme has five ingredients
+\begin{itemize}
+    \item Plaintext: This is the original intelligible message or data that is fed into the algorithm as input.
+    \item Encryption algorithm: The encryption algorithm performs various substitutions and transformations on the plaintext.
+    \item Secret key: The secret key is also input to the encryption algorithm.The key is a value independent of the plaintext and of the algorithm. The algorithm will produce a different output depending on the specific key being used at the time.The exact substitutions and transformations performed by the algorithm depend on the key.
+    \item Ciphertext: This is the scrambled message produced as output. It depends on the plaintext and the secret key. For a given message, two different keys will produce two different ciphertexts. The ciphertext is an apparently random stream of data and, as it stands, is unintelligible.
+    \item Decryption algorithm: This is essentially the encryption algorithm run in reverse. It takes the ciphertext and the secret key and produces the original plaintext.
+\end{itemize}
+
+There are two requirements for secure use of conventional encryption:
+\begin{enumerate}
+    \item We need a strong encryption algorithm.
+    \item Sender and receiver must have obtained copies of the secret key in a secure manner.
+\end{enumerate}
+\includegraphics{images/diagram5.png}
+In Symmetric Cipher Model, we assume that it is impractical to decrypt a message on the basis of the ciphertext plus knowledge of the encryption/decryption algorithm. In other words,we do not need to keep the algorithm secret; we need to keep only the key secret.
+\subsection{Cryptography}
+Cryptographic systems are characterized along three independent dimensions:
+\begin{enumerate}
+    \item The type of operations used for transforming plaintext to ciphertext.
+    \item The number of keys used.
+    \item The way in which the plaintext is processed.
+\end{enumerate}
+\subsection{Cryptanalysis and Brute-Force Attack}
+A brute-force attack involves trying every possible key until an intelligible translation of the ciphertext into plaintext is obtained.\\
+In contrast to attacking via brute force, if the attacker has information about which keys are more likely than others and use such information to try and learn the key, then such attack becomes cryptanalysis.
+\section{Substitution Technique:-}
+The two basic building blocks of all encryption techniques are substitution and transposition.\\
+In substitution technique we substitute plain text with other letters,symbols or numbers.\\
+For Example:-\\
+Plain Text: H E L L O\\
+Key: 3\\
+Cipher Text:K H O O R\\
+\begin{enumerate}
+    \item Monoalphabetic Cipher :A monoalphabetic cipher is any cipher in which the letters of the plain text are mapped to cipher text letters based on a single alphabetic key. Examples of monoalphabetic ciphers would include the Caesar-shift cipher, where each letter is shifted based on a numeric key.
+    \item Polyalphabetic Cipher : A polyalphabetic cipher is any cipher based on substitution, using multiple substitution alphabets.
+\end{enumerate}
+\begin{itemize}
+    \item Monoalphabetic Cipher : Caesar Cipher, Affine Cipher
+    \item Polyalphabetic Cipher : Vigenère Cipher, Vernam Cipher
+\end{itemize}
+\subsection{Caesar Cipher}
+The Caesar Cipher technique is one of the earliest and simplest method of encryption technique. It’s simply a type of substitution cipher, i.e., each letter of a given text is replaced by a letter some fixed number of positions down the alphabet.\\
+The encryption can be represented using modular arithmetic by first transforming the letters into numbers, according to the scheme, A = 0, B = 1,…, Z = 25.
+\\ Encryption of a letter by a shift n can be described mathematically as.
+$$Encrption: E_n(x)=(x+n)mod 26$$
+$$Decrption: D_n(x)=(x-n)mod 26$$
+\\For Example: if key=3, then:\\
+\includegraphics{images/diagram6.png}
+\\ If it is known that a given ciphertext is a Caesar cipher, then a brute-force cryptanalysis is easily performed: simply try all the 25 possible keys.\\
+Three important characteristics of Caesar Cipher enabled us to use a brute-force cryptanalysis:
+\begin{enumerate}
+    \item The encryption and decryption algorithms are known.
+    \item There are only 25 keys to try.
+    \item The language of the plaintext is known and easily recognizable.
+\end{enumerate}
+\subsection{Affine Cipher:}
+The Affine cipher is a type of monoalphabetic substitution cipher, wherein each letter in an alphabet is mapped to its numeric equivalent, encrypted using a simple mathematical function, and converted back to a letter.\\
+\\ Encryption: It uses modular arithmetic to transform the integer that each plaintext letter corresponds to into another integer that correspond to a ciphertext letter. The encryption function for a single letter is\\
+E ( x ) = ( a x + b ) mod m \\
+modulus m: size of the alphabet\\
+a and b: key of the cipher.\\
+a must be chosen such that a and m are coprime.\\
+\\ Decryption: D ( x ) = $a^{-1}$ ( x - b ) mod m
+$a^{-1}$ : modular multiplicative inverse of a modulo m. i.e., it satisfies the equation 1 = a.$a^{-1}$ mod m .\\
+\includegraphics{images/diagram7.png}
+\subsection{Vigenère Cipher}
+\begin{itemize}
+    \item The table consists of the alphabets written out 26 times in different rows, each alphabet shifted cyclically to the left compared to the previous alphabet, corresponding to the 26 possible Caesar Ciphers.
+    \item At different points in the encryption process, the cipher uses a different alphabet from one of the rows.
+    \item The alphabet used at each point depends on a repeating keyword.
+\end{itemize}
+\begin{ex}
+Plaintext : GEEKSFORGEEKS\\
+Keyword : AYUSH\\
+Ciphertext : GCYCZFMLYLEIM\\
+\includegraphics{images/diagram8.png}
+\\For generating key, the given keyword is repeated in a circular manner until it matches the length of the plain text.\\
+The keyword "AYUSH" generates the key "AYUSHAYUSHAYU"\\
+The plain text is then encrypted using the process explained below.
+\\Encryption: The first letter of the plaintext, G is paired with A, the first letter of the key. So use row G and column A of the Vigenère square, namely G. Similarly, for others. Using Algebracially it can be as:\\
+The plaintext(P) and key(K) are added modulo 26.\\
+$E_i = (P_i + K_i) mod 26$
+\\
+Decryption:\\
+$D_i = (E_i - K_i + 26) mod 26$
+\end{ex}
+\subsection{Vernam Cipher:}
+In this mechanism we assign a number to each character of the Plain-Text, like (a = 0, b = 1, c = 2, … z = 25).\\
+Method to take key:
+\\ In Vernam cipher algorithm, we take a key to encrypt the plain text which length should be equal to the length of the plain text.\\
+Encryption Algorithm:
+\begin{itemize}
+    \item Assign a number to each character of the plain-text and the key according to alphabetical order.
+    \item Add both the number (Corresponding plain-text character number and Key character number).
+    \item Subtract the number from 26 if the added number is greater than 26, if it isn’t then leave it.
+\end{itemize}    
+\begin{ex}
+Plain-Text: RAMSWARUPK\\
+Key: RANCHOBABA\\
+PT:   R  A  M   S   W   A  R   U   P   K\\
+NO:   17 0  12  18  22  0  17  20  15  10\\
+KEY:  R   A  N   C  H  O   B  A  B  A\\ 
+NO :  17  0  13  2  7  14  1  0  1  0\\
+on adding Both:\\
+CT-NO: 34  0  25  20  29  14  18  20  16  10 \\
+In this case, there are two numbers which are greater than the 26 so we have to subtract 26 from them and after applying the subtraction operation the new Cipher text character numbers are as follow:\\
+CT-NO:  8  0  25   20   3   14   18   20   16   10\\
+New Cipher-Text is after getting the corresponding character from the number.\\
+CIPHER-TEXT: I  A  Z  U  D  O  S  U  Q  K 
+\end{ex}
+\subsection{Playfair Cipher}
+The Playfair Cipher Encryption Algorithm:\\
+The Algorithm consistes of 2 steps:\\
+Generate the key square(5*5) 
+\begin{itemize}
+        \item The key square is a 5*5 grid of alphabets that acts as the key for encrypting the plaintext. Each of the 25 alphabets must be unique and one letter of the alphabet (usually J) is omitted from the table (as the table can hold only 25 alphabets). If the plaintext contains J, then it is replaced by I.
+        \item The initial alphabets in the key square are the unique alphabets of the key in the order in which they appear followed by the remaining letters of the alphabet in order.
+\end{itemize}
+Algorithm to encrypt the plain text: The plaintext is split into pairs of two letters \begin{itemize}
+    \item If both the letters are in the same column: Take the letter below each one (going back to the top if at the bottom).
+    \item If both the letters are in the same row: Take the letter to the right of each one (going back to the leftmost if at the rightmost position). 
+    \item If neither of the above rules is true: Form a rectangle with the two letters and take the letters on the horizontal opposite corner of the rectangle. 
+\end{itemize}
+\begin{ex}
+Using Key "monarchy" \\
+\includegraphics{images/diagram9.png}
+\\ Plain Text: "instrumentsz"\\
+Encrypted Text: gatlmzclrqtx\\
+Encryption: \\in:
+  i $ ->$ g\\
+  n $ ->$ a\\st:
+  s $ ->$ t\\
+  t $ ->$ l\\ru:
+  r $ ->$ m\\
+  u $ ->$ z\\me:
+  m $ ->$ c\\
+  e $ ->$ l\\nt:
+  n $ ->$ r\\
+  t $ ->$ q\\sz:
+  s $ ->$ t\\
+  z $ ->$ x\\
+\end{ex}
+\subsection{Hill Cipher}
+Hill cipher is a polygraphic substitution cipher based on linear algebra.Each letter is represented by a number modulo 26. To encrypt a message, each block of n letters (considered as an n-component vector) is multiplied by an invertible n * n matrix, against modulus 26. To decrypt the message, each block is multiplied by the inverse of the matrix used for encryption.\\
+The matrix used for encryption is the cipher key, and it should be chosen randomly from the set of invertible n * n matrices.
+\begin{ex}
+We have to encrypt the message ‘ACT’ (n=3).\\
+The key is ‘GYBNQKURP’ 
+\\
+\includegraphics{images/diagram10.png}
+\end{ex}
+\subsection{Pigpen Cipher}
+The Pigpen Cipher is another example of a substitution cipher, but rather than replacing each letter with another letter, the letters are replaced by symbols.
+\\Encryption:\\
+The encryption process is fairly straightforward, replacing each occurence of a letter with the designated symbol. The symbols are assigned to the letters using the key shown below, where the letter shown is replaced by the part of the image in which it is located.\\
+\includegraphics{images/diagram11.png}
+\\ Decryption\\
+The decryption process is just the reverse of the encryption process. Using the same key (the grid above), you locate the image depicted in the ciphertext, and replace it with the letter given by that part of the grid.
+\subsection{Enigma Machine}
+The Enigma machine is an encryption device developed and used in the early- to mid-20th century to protect commercial, diplomatic and military communication. It was employed extensively by Nazi Germany during World War II, in all branches of the German military.\\
+Enigma has an electromechanical rotor mechanism that scrambles the 26 letters of the alphabet. In typical use, one person enters text on the Enigma's keyboard and another person writes down which of 26 lights above the keyboard lights up at each key press. If plain text is entered, the lit-up letters are the encoded ciphertext. Entering ciphertext transforms it back into readable plaintext. The rotor mechanism changes the electrical connections between the keys and the lights with each keypress. The security of the system depends on a set of machine settings that were generally changed daily during the war, based on secret key lists distributed in advance, and on other settings that were changed for each message. The receiving station has to know and use the exact settings employed by the transmitting station to successfully decrypt a message.
+\section{Transposition Technique}
+A very different kind of mapping is achieved by performing
+some sort of permutation on the plaintext letters. This technique is referred to as a
+transposition cipher.
+\subsection{Rail Fence Cipher}
+The rail fence cipher (also called a zigzag cipher) is a form of transposition cipher.
+It derives its name from the way in which it is encoded.\\
+Encryption\\
+Input : "attack at once"\\
+Key = 2 \\
+Output : atc toctaka ne \\
+Decryption\\
+Input : "atc toctaka ne"\\
+Key = 2\\
+Output : attack at once\\
+\section{Steganography}
+Steganography is the technique of hiding secret data within an ordinary, non-secret, file or message in order to avoid detection; the secret data is then extracted at its destination. The use of steganography can be combined with encryption as an extra step for hiding or protecting data.
+\end{document}
