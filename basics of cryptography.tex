@@ -5,7 +5,18 @@
 \newcommand\tab[1][3cm]{\hspace*{#1}}
 \newtheorem{defn}{Definition} [section]
 \newtheorem{ex}{Example}[section]
-\title{Chapter-2 "Basics of Crptography"}
+\usepackage{listings}
+\usepackage{xcolor} % for setting colors
+\lstset{
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{green}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red} % string color
+}
+\title{"Basics of Crptography"}
 \author{Shubham Kumar\thanks{Mtech-1st yr: Information Security, Atal Bihari Vajpayee Indian Institute of Information Technology and Management, Gwalior, India-474015} }
 \date{October 2020}
 
@@ -13,8 +24,341 @@
 
 \maketitle
 
-Note: Cryptography is a method of protecting information and communications through the use of codes, so that only those for whom the information is intended can read and process it.
-\\
+
+\section{Set Theory:-}
+\begin{itemize}
+    \item Universal Set or Universe of discourse: Collection of Objects.
+	\item Set: Collection of well-defined objects. Here the term well defined refers, the definition of a set is not person dependent.
+	\item It can be defined using Characteristic function. This tells us that the entire (any) Mathematical structure is built on the binary logic.
+	\item Cartesian product of two sets $A$ and $B$ is nothing but the set of all possible combinations of elements of $A$ and $B$
+	\item Function: Every element of domain is associated with some other (unique) element of the co-domain
+	\item Binary Operator: $*$ is said to be a binary operator and is defined as $*:G \times G \rightarrow G $
+	\item Arithmetic Operation: Addition, Subtraction, Multiplication, Division (all are binary operators on $\Re$)
+\end{itemize}
+\section{Group Theory:-}
+\begin{defn}
+A set $G$ with a Binary operation $*$ defined on $G$ is said to be a {\textbf{Group}}, if it satisfies the following four axioms,
+\begin{itemize}
+	\item Closure: $$\forall a, b \in G \Rightarrow a*b \in G$$
+	
+	\item Associative: $$a*(b*c)=(a*b)*c, \forall a,b,c \in G$$
+	
+	\item Identity: For every $a \in G$, there exists a unique element $e$ such that, $a*e=e*a=a$, then 'e' is called as identity element
+	\item Inverse: For every non-zero element $a$ of $G$, there exists a unique non-zero $a' \in G$ such that, $$a*a'=a'*a=e$$
+	\item Commutative: $$a*b=b*a, \forall a,b \in G$$\\
+	If a Group satisfies the Commutative property, then it is called as an Abelian Group.
+\end{itemize}
+\subsection{Classification of a Algebraic Structure}
+\begin{itemize}
+    \item Groupoid: Closure
+    \item SemiGroup: Closure + Associative
+    \item Monoid: Closure + Associative + Identity
+    \item Group: Closure + Associative + Identity + Inverse
+    \item Abelian Group: If a Group satisfies the Commutative property.
+\end{itemize}
+\subsection{Properties of Group}
+\begin{itemize}
+    \item If a group has a finite number of elements, it is referred to as a finite group, and the order of the group is equal to the number of elements in the group. Otherwise, the group is an infinite group.
+    \item Identity Element($e$) is unique for a Group.
+    \item Left Identity Should be same as Right Identity : $$a*e=e*a$$
+    \item $a^{-1}$ is unique for a given element a.
+    \item $(a*b)^{-1}=b^{-1}*a^{-1}$
+    \item If G is Abelian Group than: $$(a*b)^{-1}=b^{-1}*a^{-1}$$ $$(a*b)^{-1}=a^{-1}*b^{-1}$$
+\end{itemize}
+\subsubsection{Cyclic Group}
+\begin{itemize}
+    \item A group G is cyclic if every element of G is a power $a^{k}$ (k is an integer) of a fixed element $a \in G$. The element a is said to generate the group G, or to be a generator of G.We denote the cyclic group of order n by $Z_n$.
+    \item A cyclic group is always an abelian group, and may be finite or infinite but and abelian group need not be cyclic group.
+    \item A non-abelian group will always be non-cyclic.
+    
+\end{itemize}
+\begin{ex} Check the following (Whether Cyclic or not)
+\\For $n \geq 1$ $({Z}_n,\oplus)$ is cyclic
+\\Solution: $Z_n$ is an abelian group
+\\ For $\oplus$, $Z_n$ generates number $a_i$ where $a_i < n$
+\\ Then we can find a subgroup of $Z_n$ which generates a repetative group. So, we can say that $Z_n$ is cyclic group.
+\end{ex}
+\begin{ex}Check the following (whether Group or not)
+\begin{enumerate}
+	\item The set of integers with usual addition 
+	\\ Solution:- Let $a,b,c \in Z$, then 
+	\\Closure Property: $$a+b \in Z$$
+	\\Associative Property: $$a+(b+c)=(a+b)+c, \forall a,b,c \in Z$$
+	\\Identity Property: $$a+0=0+a=a, \forall a \in Z$$
+	\\Inverse Property: $$ \ a + \ (-a\ ) =\ (-a\ ) + a = 0, \forall a \in Z$$
+	\\Commutative Property: $$a+b=b+a,\forall a,b \in Z$$
+	\\So, the set of integers with usual addition is not only group but it's an abelian group.\\
+	\item The set of integers with usual multiplication
+	\\ Solution:- Let $a,b,c \in Z$, then 
+	\\Closure Property: $$a*b \in Z$$
+	\\Associative Property: $$a*(b*c)=(a*b)*c, \forall a,b,c \in Z$$
+	\\Identity Property: $$a*1=1*a=a, \forall a \in Z$$
+	\\Inverse Property: $$a*a^{-1}= a^{-1} * a = 1 , \forall a \in Z$$
+	\\It doesn't holds because except for 1, inverse of every number is not integer it's in fraction.
+	\\Therefore, the set of integers under multiplication is not a group.\\
+	\item The set of real numbers with usual addition
+	\\Solution:- Let $a,b,c \in R$, then 
+	\\Closure Property: $$a+b \in R$$
+	\\Associative Property: $$a+(b+c)=(a+b)+c, \forall a,b,c \in R$$
+	\\Identity Property: $$a+0=0+a=a, \forall a \in R$$
+	\\Inverse Property: $$ \ a + \ (-a\ ) =\ (-a\ ) + a = 0 , \forall a \in R$$
+	\\Commutative Property: $$a+b=b+a,\forall a,b \in R$$
+	\\So, the set of real numbers with usual addition is not only group but it's an abelian group.\\
+	\item The set of real numbers with usual multiplication
+	\\Solution:- Let $a,b,c \in R$, then 
+	\\Closure Property: $$a*b \in R$$
+	\\Associative Property: $$a*(b*c)=(a*b)*c, \forall a,b,c \in R$$
+	\\Identity Property: $$a*1=1*a=a, \forall a \in R$$
+	\\Inverse Property: $$a*a^{-1}= a^{-1} * a = 1 , \forall a \in R$$
+	\\Commutative Property: $$a+b=b+a,\forall a,b \in R$$
+	\\Therefore, the set of real numbers under multiplication is not only group but it's an abelian group.\\
+	\item The set of natural numbers with usual addition
+	\\Solution:- Let $a,b,c \in N$, then 
+	\\Closure Property: $$a+b \in N$$
+	\\Associative Property: $$a+(b+c)=(a+b)+c, \forall a,b,c \in N$$
+	\\Identity Property: $$a+0=0+a=a, \forall a \in N$$
+	\\Inverse Property: $$ \ a + \ (-a\ ) =\ (-a\ ) + a = 0 , \forall a \in R, but except for a = 0, -a \notin N $$
+	\\So, The set of natural numbers under addition is not a group beause it does not have the inverse property .\\
+	\item $A=\{0,1,2,3\}, a*b=a+b-ab$
+	\\Closure Property: For a=3 and b=3
+	\\ $$ a*b=a+b-ab = 3+3-(3*3) $$
+    \tab	$a*b= 6-9 = -3$ and $-3 \notin A$ 
+    \\So,it is not a group.
+\end{enumerate}
+\end{ex}
+\end{defn}
+\section{Rings:-}
+\begin{defn} A set $R$ with two Binary operations $*_1$ and $*_2$ (denoted by \textbf{$(R, *_1,*_2)$}) is said to be a \emph{\textbf{Ring}}, if
+It satisfies the following axioms,\\
+\begin{itemize}
+    \item $(R,*_1)$ is an abelian group
+	\item Closure: $$\forall a, b \in R \Rightarrow a*_2b \in R$$
+	
+	\item Associative: $$a*_2(b*_2c)=(a*_2b)*_2c, \forall a,b,c \in R$$
+	
+	\item Identity: For any $a \in R$, there exists a unique $e_2 \in R$ such that, $$a*_2e_2=e_2*_2a=a$$, then '$e_2$' is called as an identity element of $R$ w.r.t. $*_2$.
+		\item Distributive of $*_1$ over $*_2$:\\
+	$a*_2(b*_1c)=(a*_2b)*_1 (a*_2c)$\\
+	$(a*_1b)*_2c=(a*_1c)*_2 (b*_1c)$\\
+	\\ When it satisfies the above mention properties, then it is called ring.
+	\item Commutative: $$a*_2b=b*_2a, \forall a,b \in G$$ When a Ring satisfies commutative property w.r.t. $*_2$, then we call $(R,*_1,*_2)$ as a \textbf{\emph{commutative ring with identity}}
+\subsection{Integral Domain}
+Commutative ring that obeys the following axioms
+\begin{itemize}
+    \item Multiplicative identity: There is an element 1 in R such that a1=1a=a, $ \forall a \in R $
+    \item Non Zero divisors: If a, b in R and ab = 0, then either a = 0 or b=0.
+\end{itemize}
+\end{itemize}
+\begin{ex} Check the following (Whether Ring or not)
+\begin{enumerate} 
+	\item The set of integers with usual addition and multiplication
+	\\ Solution:- Set of integers with usual addition is an abelian group as shown above in example (2.1-1)
+	\\For multiplication:
+	\begin{itemize}
+	    \item Closure: $$\forall a, b \in Z \Rightarrow a*b \in Z$$
+        \item Associative: $$a*(b*c)=(a*b)*c, \forall a,b,c \in Z$$
+	    \item Identity: For any $a \in Z$, there exists a unique $e_2 \in R$ such that, $$a*1=1*a=a$$, then '$1$' is an identity element of $Z$ w.r.t. $*$.
+		\item Distributive of $+$ over $*$:\\
+	        $a*(b+c)=(a*b)+ (a*c)$  $ \forall a,b,c \in Z $ \\
+	        $(a+b)*c=(a*c)+(b*c)$   $ \forall a,b,c \in Z $ \\
+	\\Therefore the set of integers with usual addition and multiplication is a ring.
+	\end{itemize}
+	\item The set of real numbers with usual addition and multiplication
+	\\ Solution:- Set of real numbers with usual addition is an abelian group as shown above in example (2.1-3)
+	\\For multiplication:
+	\begin{itemize}
+	    \item Closure: $$\forall a, b \in R \Rightarrow a*b \in R$$
+        \item Associative: $$a*(b*c)=(a*b)*c, \forall a,b,c \in R$$
+	    \item Identity: For any $a \in R$, $1$ is an identity element of $R$ such that, $$a*1=1*a=a$$ .
+		\item Distributive of $+$ over $*$:\\
+	        $a*(b+c)=(a*b)+ (a*c)$  $ \forall a,b,c \in R $ \\
+	        $(a+b)*c=(a*c)+(b*c)$   $ \forall a,b,c \in R $ \\
+	\\Therefore the set of real numbers with usual addition and multiplication is a ring.
+	\end{itemize}
+	\item The set of rational numbers with usual addition and multiplication
+	\\ Solution:- Let $a,b,c \in Q$, then 
+	\\Closure Property: $$a+b \in Q$$
+	\\Associative Property: $$a+(b+c)=(a+b)+c, \forall a,b,c \in Q$$
+	\\Identity Property: $$a+0=0+a=a, \forall a \in Q$$
+	\\Inverse Property: $$ \ a + \ (-a\ ) =\ (-a\ ) + a = 0, \forall a \in Q$$
+	\\Commutative Property: $$a+b=b+a,\forall a,b \in Q$$
+	\\So, the set of rational numbers with usual addition is an abelian group.\\
+	\\For multiplication:
+	\begin{itemize}
+	    \item Closure: $$\forall a, b \in R \Rightarrow a*b \in Q$$
+        \item Associative: $$a*(b*c)=(a*b)*c, \forall a,b,c \in Q$$
+	    \item Identity: For any $a \in Q$, $1$ is an identity element of $Q$ such that, $$a*1=1*a=a$$ .
+		\item Distributive of $+$ over $*$:\\
+	        $a*(b+c)=(a*b)+ (a*c)$  $ \forall a,b,c \in Q $ \\
+	        $(a+b)*c=(a*c)+(b*c)$   $ \forall a,b,c \in Q $ \\
+	    \\Therefore the set of rational numbers with usual addition and multiplication is a ring.
+	\end{itemize}
+	\item The set of Even integers(2N) with usual addition and multiplication
+	\\ Solution:- 	\\Closure Property: $$a+b \in 2N$$
+	\\Associative Property: $$a+(b+c)=(a+b)+c, \forall a,b,c \in 2N$$
+	\\Identity Property: $$a+0=0+a=a, \forall a \in 2N$$
+	\\Inverse Property: $$ \ a + \ (-a\ ) =\ (-a\ ) + a = 0, \forall a \in 2N$$
+	\\Commutative Property: $$a+b=b+a,\forall a,b \in 2N$$
+	\\So, the set of even integers with usual addition is an abelian group.\\
+	\\For multiplication:
+	\begin{itemize}
+	    \item Closure: $$\forall a, b \in R \Rightarrow a*b \in 2N$$
+        \item Associative: $$a*(b*c)=(a*b)*c, \forall a,b,c \in 2N$$
+	    \item Identity: For any $a \in Q$, $1$ is an identity element of $2N$ such that, $$a*1=1*a=a$$ .
+		\item Distributive of $+$ over $*$:\\
+	        $a*(b+c)=(a*b)+ (a*c)$  $ \forall a,b,c \in 2N $ \\
+	        $(a+b)*c=(a*c)+(b*c)$   $ \forall a,b,c \in 2N $ \\
+	    \\Therefore the set of even integers with usual addition and multiplication is a ring.
+    \end{itemize}	
+\end{enumerate}
+\end{ex}
+\end{defn}
+\section{Fields:-}
+\begin{defn} A set $F$ with two Binary operations $*_1,*_2$ (denoted by $(F,*_1,*_2)$) is said to be a field, if it satisfies the following axioms,
+\begin{enumerate}
+	\item $(F,*_1,*_2)$ is a commutative ring with identity 
+	\begin{enumerate}
+		\item $(F,*_1)$ is an abelian group
+	\item Closure: $$\forall a, b \in F \Rightarrow a*_2b \in F$$
+	
+	\item Associative: $$a*_2(b*_2c)=(a*_2b)*_2c, \forall a,b,c \in F$$
+	
+	\item Identity: For any $a \in F$, there exists a unique $e_2 \in F$ such that, $$a*_2e_2=e_2*_2a=a$$, then '$e_2$' is called as an identity element of $F$ w.r.t. $*_2$.
+		\item Distributive of $*_1$ over $*_2$:\\
+	$a*_2(b*_1c)=(a*_2b)*_1 (a*_2c)$\\
+	$(a*_1b)*_2c=(a*_1c)*_2 (b*_1c)$
+	\item Commutative: $$a*_2b=b*_2a, \forall a,b \in F$$ 
+	\end{enumerate}
+	
+	\item For every non-zero element $a \in F$, we must get a unique element $a'\in F$ such that, $a*_2a'=a'*_2a=e_2$.
+\end{enumerate}
+\begin{ex} Check the following (Whether Field or not)
+\begin{enumerate} 
+	\item The set of integers with usual addition and multiplication
+	\\ Solution:- 	\\Closure Property: $$a+b \in Z$$
+	\\Associative Property: $$a+(b+c)=(a+b)+c, \forall a,b,c \in Z$$
+	\\Identity Property: $$a+0=0+a=a, \forall a \in Z$$
+	\\Inverse Property: $$ \ a + \ (-a\ ) =\ (-a\ ) + a = 0, \forall a \in Z$$
+	\\Commutative Property: $$a+b=b+a,\forall a,b \in Z$$
+	\\So, the set of integers with usual addition is an abelian group.\\
+	\\For multiplication:
+	\begin{itemize}
+	    \item Closure: $$\forall a, b \in Z \Rightarrow a*b \in Z$$
+        \item Associative: $$a*(b*c)=(a*b)*c, \forall a,b,c \in Z$$
+	    \item Identity: For any $a \in Z$, $1$ is an identity element of $Z$ such that, $$a*1=1*a=a$$ .
+		\item Distributive of $+$ over $*$:\\
+	        $a*(b+c)=(a*b)+ (a*c)$  $ \forall a,b,c \in Z $ \\
+	        $(a+b)*c=(a*c)+(b*c)$   $ \forall a,b,c \in Z $ \\
+	   \item Commutative: $$a*b=b*a  \forall a,b \in Z$$ \\
+	   \item Multiplicative Inverse: $$a*a^{-1}= a^{-1} * a = 1 , \forall a^{-1} \notin Z$$\\
+	    \\Therefore the set of integers with usual addition and multiplication is not a field.
+	 \end{itemize}
+	\item The set of real numbers with usual addition and multiplication
+	\\ Solution:- 	\\Closure Property: $$a+b \in R$$
+	\\Associative Property: $$a+(b+c)=(a+b)+c, \forall a,b,c \in R$$
+	\\Identity Property: $$a+0=0+a=a, \forall a \in R$$
+	\\Inverse Property: $$ \ a + \ (-a\ ) =\ (-a\ ) + a = 0, \forall a \in R$$
+	\\Commutative Property: $$a+b=b+a,\forall a,b \in R$$
+	\\So, the set of real numbers with usual addition is an abelian group.\\
+	\\For multiplication:
+	\begin{itemize}
+	    \item Closure: $$\forall a, b \in R \Rightarrow a*b \in R$$
+        \item Associative: $$a*(b*c)=(a*b)*c, \forall a,b,c \in R$$
+	    \item Identity: For any $a \in R$, $1$ is an identity element of $R$ such that, $$a*1=1*a=a$$ .
+		\item Distributive of $+$ over $*$:\\
+	        $a*(b+c)=(a*b)+ (a*c)$  $ \forall a,b,c \in R $ \\
+	        $(a+b)*c=(a*c)+(b*c)$   $ \forall a,b,c \in R $ \\
+	   \item Commutative: $$a*b=b*a  \forall a,b \in R$$ \\
+	   \item Multiplicative Inverse: $$a*a^{-1}= a^{-1} * a = 1 , \forall a^{-1} \in R$$\\
+	    \\Therefore the set of real numbers with usual addition and multiplication is a field.
+	 \end{itemize}
+	\item The set of rational numbers with usual addition and multiplication
+	\\ Solution:- 	\\Closure Property: $$a+b \in Q$$
+	\\Associative Property: $$a+(b+c)=(a+b)+c, \forall a,b,c \in Q$$
+	\\Identity Property: $$a+0=0+a=a, \forall a \in Q$$
+	\\Inverse Property: $$ \ a + \ (-a\ ) =\ (-a\ ) + a = 0, \forall a \in Q$$
+	\\Commutative Property: $$a+b=b+a,\forall a,b \in Q$$
+	\\So, the set of rational numbers with usual addition is an abelian group.\\
+	\\For multiplication:
+	\begin{itemize}
+	    \item Closure: $$\forall a, b \in Q \Rightarrow a*b \in Q$$
+        \item Associative: $$a*(b*c)=(a*b)*c, \forall a,b,c \in Q$$
+	    \item Identity: For any $a \in Q$, $1$ is an identity element of $Q$ such that, $$a*1=1*a=a$$ .
+		\item Distributive of $+$ over $*$:\\
+	        $a*(b+c)=(a*b)+ (a*c)$  $ \forall a,b,c \in Q $ \\
+	        $(a+b)*c=(a*c)+(b*c)$   $ \forall a,b,c \in Q $ \\
+	   \item Commutative: $$a*b=b*a  \forall a,b \in Q$$ \\
+	   \item Multiplicative Inverse: $$a*a^{-1}= a^{-1} * a = 1 , \forall a^{-1} \in Q$$\\
+	    \\Therefore the set of rational numbers with usual addition and multiplication is a field.
+	 \end{itemize}
+	\item The set of Even integers with usual addition and multiplication
+		\\ Solution:- 	\\Closure Property: $$a+b \in 2N$$
+	\\Associative Property: $$a+(b+c)=(a+b)+c, \forall a,b,c \in 2N$$
+	\\Identity Property: $$a+0=0+a=a, \forall a \in 2N$$
+	\\Inverse Property: $$ \ a + \ (-a\ ) =\ (-a\ ) + a = 0, \forall a \in 2N$$
+	\\Commutative Property: $$a+b=b+a,\forall a,b \in 2N$$
+	\\So, the set of even integers with usual addition is an abelian group.\\
+	\\For multiplication:
+	\begin{itemize}
+	    \item Closure: $$\forall a, b \in R \Rightarrow a*b \in 2N$$
+        \item Associative: $$a*(b*c)=(a*b)*c, \forall a,b,c \in 2N$$
+	    \item Identity: For any $a \in Q$, $1$ is an identity element of $2N$ such that, $$a*1=1*a=a$$ .
+		\item Distributive of $+$ over $*$:\\
+	        $a*(b+c)=(a*b)+ (a*c)$  $ \forall a,b,c \in 2N $ \\
+	        $(a+b)*c=(a*c)+(b*c)$   $ \forall a,b,c \in 2N $ \\
+	    \item Commutative: $$a*b=b*a  \forall a,b \in 2N$$ \\
+	    \item Multiplicative Inverse: $$a*a^{-1} = a^{-1} * a = 1 , \forall a^{-1} \notin 2N$$\\
+	    \\Therefore the set of even integers with usual addition and multiplication is not a field.
+    \end{itemize}	
+\end{enumerate}
+\end{ex}
+\includegraphics{images/diagram1.png}
+\subsection{Finite Fields of the form GF(p)}
+\begin{itemize}
+    \item Finite fields play a crucial role in many cryptographic algorithms.
+    \item The order of a finite field (number of elements in the field) must be a power of a prime $p^{n} $ , where n is a positive integer.
+    \item The finite field of order $p^{n} $ is generally written GF($p^{n} $); GF stands for Galois field.
+    \item For a given prime, p, we define the finite field of order p, GF(p), as the set $Z_p$ of integers {0, 1, … , p - 1} together with the arithmetic operations modulo p. 
+    \item Any integer in $Z_n$ has a multiplicative inverse if and only if that integer is relatively prime to n.
+    \item If n is prime, then all of the nonzero integers in $Z_n$ are relatively prime to n, and therefore there exists a multiplicative inverse for all of the nonzero integers in $Z_n$.
+    \item For example:- $Z_5$={0,1,2,3,4}
+    \\1 mod 5 = 1; 1 is multiplicative inverse of itself
+    \\(2*3) mod 5 = 1; 2 is multiplicative inverse of 3
+    \\(3*2) mod 5 = 1; 3 is multiplicative inverse of 2
+    \\(4*4)mod 5 = 1; 4 is multiplicative inverse of itself
+    \\
+    \item If a and b are relatively prime, then b has a multiplicative inverse modulo a. That is, if gcd(a, b) = 1, then b has a multiplicative inverse modulo a.
+    \item Galois Field
+    $$GF(P)=(Z_p,\oplus,\otimes)$$
+    \\for $GF(2^{n})$, we use irreducible polynomial
+\end{itemize}
+\end{defn}
+\section{Polynomial arithmetic}
+\subsection{Ordinary Polynomial Arithmetic}
+\begin{itemize}
+    \item A polynomial of degree n (integer $n \geq 0$) is an expression of the form
+    $$ $$ f(x)= $a_n X^{n} + a_{n-1} X^{n-1} + a_{n-2} X^{n-2}+...+a_0$= $\sum_{i=0} ^{n} a_{i} X^{i}$
+    \item A zero-degree polynomial is called a constant polynomial and is simply an element of the set of coefficients. An nth-degree polynomial is said to be a monic polynomial if $a_n$=1.
+\end{itemize}
+\subsection{Polynomial Arithmetic with Coefficients in $Z_p$}
+\begin{itemize}
+    \item When polynomial arithmetic is performed on polynomials over a field, then division is possible.
+    \item Note:- this does not mean that exact division is possible. Within a field, given two elements and , the quotient a/b is also an element of the field. However, given a ring R that is not a field, in general, division will result in both a quotient and a remainder; this is not exact division.
+    \includegraphics{images/diagram2.png}
+\end{itemize}
+\subsection{Irreducible Polynomial}
+A polynomial f(x) over a field is called irreducible polynomial if and only if f(x) cannot be expressed as a product of two polynomials both over and of degree lower than that of f(x). An irreducible polynomial is also called as prime polynomial.\\
+\includegraphics{images/diagram3.png}
+\subsection{Finding the Greatest Common Divisor}
+We can extend the analogy between polynomial arithmetic over a field and integer
+arithmetic by defining the greatest common divisor as follows.The polynomial
+is said to be the greatest common divisor of a(x) and b(x)if the following are true.
+\begin{enumerate}
+    \item c(x) divides both a(x) and b(x).
+    \item Any divisor of a(x) and b(x) is a divisor of c(x).
+\end{enumerate}
+We can adapt the Euclidean algorithm to compute the greatest common divisor of two polynomials.\\
+\includegraphics{images/diagram4.png}
 \section{Symmetric Cipher Model:-}
 A symmetric encryption scheme has five ingredients
 \begin{itemize}
@@ -195,4 +539,267 @@ Key = 2\\
 Output : attack at once\\
 \section{Steganography}
 Steganography is the technique of hiding secret data within an ordinary, non-secret, file or message in order to avoid detection; the secret data is then extracted at its destination. The use of steganography can be combined with encryption as an extra step for hiding or protecting data.
+\section{Fundamental Theorem of Arithmetic:}
+The fundamental theorem of arithmetic states that every positive integer (except the number 1) can be represented in exactly one way apart from rearrangement as a product of one or more primes.\\
+This theorem is also called the unique factorization theorem. The fundamental theorem of arithmetic is a corollary of the first of Euclid's theorems.\\
+\includegraphics{images/diagram12.png}
+\section{Euler’s Totient Function:}
+Euler's totient function, also known as phi-function $\phi(n)$, counts the number of
+integers between 1 and n inclusive, which are co-prime to n. Two numbers are co-prime if
+their greatest common divisor equals 1.\\
+Here are values of $\phi(n)$ for the first few positive integers:\\
+\includegraphics{images/diagram13.png}
+\subsection{Properties:}
+The following properties of Euler totient function are sufficient to calculate it for any number:
+\begin{itemize}
+    \item If p is a prime number, then GCD(p,q) = 1, $\forall 1 \leq q < p $.
+    \\Therefore we have: $\phi(p)=p-1$
+    \item If a and b are relatively prime, then: 
+    \\ $\phi(pq)= \phi(p) * \phi(q) = (p-1)(q-1) $
+    \item If p is a prime number and $k\geq 1$, then there are exactly $p^{k}$/p numbers between 1 and $p^{k}$ that are divisible by p. Which gives us: 
+    $$ \phi(p^{k})=p^{k}-p^{k-1}$$
+\end{itemize}
+\section{Fermat's Little theorem:}
+Fermat's little theorem is a fundamental theorem in elementary number theory, which helps compute powers of integers modulo prime numbers.
+\\ Let p be any prime number and a be any integer. Then $a^{p}$-p is always divisible by p. \\
+Modular arithmetic notation: $a^{p}$ $\equiv$ a mod p \\
+$a^{p-1}$ $\equiv$ 1 mod p \\
+For example: a = 7, p = 19 \\
+$7^{2}$ = 49 = 11(mod 19)\\
+$7^{4}$ = 121 = 7(mod 19)\\
+$7^{8}$ = 49 = 11(mod 19)\\
+$7^{16}$ = 121 = 7(mod 19)\\
+$a^{p-1}$ = $7^{18}$ = $7^{16}$ * $7^{2}$ = 7*11 = 1(mod 19)
+\section{System of Linear Congruences}
+1. Using solution sets.\\
+2. Using equations. \\
+3. Chinese Remainder Theorem (C.R.T)
+\subsection{Using solution sets:}
+x = 1 mod 3 \\
+x = 3 mod 5 \\
+A1 = {..., -2, 1, 4, 7, 10,...} \\
+A2 = {..., -2, 3, 8, 13, 18,...} \\
+solution set for x = A1 $\cap$ A2
+\subsection{Using Equation:}
+x $\equiv$ 3 mod 5   \\
+x $\equiv$ 1 mod 3   \\
+x=5q1 + 3   ..eq(1)   \\
+x=3q2 + 1   ..eq(2)   \\
+5q1 = 3q2  - 2   \\
+5q1 mod 3 = 1 mod 3   \\
+q1 5*2 mod 3 = 2 mod 3   \\
+q1 = 3k +2   \\
+using eq(1):   \\
+x = 5q1 + 3   \\
+x = 5(3k + 2) +3   \\
+x = 15k + 13
+\subsection{Chinese Remainder Theorem (C.R.T)}
+Chinese remainder theorem gives us an algorithm for solving a system of linear congruences with one unknown. \\
+Proof:\\
+$M=m_1*m_2*m3*...*m_r$  and  $M_j=M/m_j$ , for j = 1 to r \\
+Let $y_i$be an inverse of $M_j$ modulo $m_j$ \\
+Then , x = $\sum_{1}^{r} a_j M_j y_j$ Mod M \\
+For Example: \\
+x $\equiv$ a1 mod n1 \\
+x $\equiv$ a2 mod n2 \\
+x $\equiv$ a3 mod n3 \\
+M = a1*a2*a3 \\
+m1 = M/a1 \\
+m2 = M/a2 \\
+m3 = M/a3 \\
+y1 = ($m1^{-1}$) Mod a1 \\
+y2 = ($m2^{-1}$) Mod a2 \\
+y3 = ($m3^{-1}$) Mod a3 \\
+x = $\sum_{1}^{3} a_i M_i y_i$ Mod M 
+\section{RSA Algorithm:}
+RSA algorithm is asymmetric cryptography algorithm. Asymmetric actually means that it works on two different keys i.e. Public Key and Private Key. As the name describes that the Public Key is given to everyone and Private key is kept private.\\
+The idea of RSA is based on the fact that it is difficult to factorize a large integer. The public key consists of two numbers where one number is multiplication of two large prime numbers. And private key is also derived from the same two prime numbers. So if somebody can factorize the large number, the private key is compromised. Therefore encryption strength totally lies on the key size and if we double or triple the key size, the strength of encryption increases exponentially. RSA keys can be typically 1024 or 2048 bits long, but experts believe that 1024 bit keys could be broken in the near future. But till now it seems to be an infeasible task.
+\subsection{Algorithm:}
+\begin{itemize}
+    \item Step 1: Choose large p,q
+    \item Step 2: n = p.q
+    \item Step 3: Choose e: $1<e<\phi(n)$
+    \item Step 4: Calculate d: d = $e^{-1}$ Mod $\phi(n)$
+    \item Step 5: Public Key (e,n)\\
+    Priavte Key (d,p,q) - secret key \\
+    $\phi(n)$ = (p-1)*(q-1)
+    \item Step 6: C = $M^{e}$ Mod n
+    \\ M = $C^{d}$ Mod n
+\end{itemize}
+\section{Quadratic Residue Mod p}
+If there is an integer $0<x<p$ such that\\
+$x^{2}=q$(mod p)\\
+the congruence has a solution, then q is said to be a quadratic residue (mod p).Note that the trivial case q=0 is generally excluded from lists of quadratic residues so that the number of quadratic residues (mod n) is taken to be one less than the number of squares (mod n). However, other sources include 0 as a quadratic residue. \\
+If the congruence does not have a solution, then q is said to be a quadratic non-residue (mod p).\\
+In practice, it suffices to restrict the range to $0<x<=\lfloor p/2 \rfloor$, where $\lfloor x \rfloor$ is the floor function, because of the symmetry $(p-x)^2=x^2$ (mod p). 
+\\ For Example: $Z_7$={0,1,2,3,4,5,6}
+\\ $1^{2}$ Mod 7 = 1
+\\ $2^{2}$ Mod 7 = 4
+\\ $3^{2}$ Mod 7 = 2
+\\ $4^{2}$ Mod 7 = 2
+\\ $5^{2}$ Mod 7 = 4
+\\ $6^{2}$ Mod 7 = 1
+\\ Q R Mod P = {1,2,4} \\
+x1 = r then x2 = -r + p \\
+For Quadratic Non-Residue Mod p \\
+No. of $QNR_p$ Mod p $\Rightarrow$ (p-1)/2 \\
+No. of $QR_p$ Mod p $\Rightarrow$ (p-1)/2 
+\section{Euler's Criterion :}
+Let p be a prime number, then for any x $\in$ $Z_p^{*}$ , x $\in$ QR Mod p,iff
+\\ $a^{(p-1)/2}$ = 1 Mod p
+\\For Example: Let p = 29 and a = 13
+\\ $13^{(29-1)/2}$ $\equiv$ $13^{14}$ \\
+13 Mod 29 = 13  \\
+$13^{2}$ Mod 29 = 24  \\
+$13^{4}$ Mod 29 = $24^{2}$ Mod 29 = 25  \\
+$13^{8}$ Mod 29 = $25^{2}$ Mod 29 = 16  \\
+16*25*24 Mod 29 $\equiv$ 9600 Mod 29 $\equiv$ 1
+\section{Legendre Symbol :}
+Legendre Symbol is defined to be equal to $\pm$1 depending on whether 'a' is a quadratic residue modulo p. \\
+\includegraphics{images/diagram14.png}
+\\ For Example:
+\\ (169/13) = 0 \\
+(2/13) = -1 \\
+$2^{(13-1)/2}$ Mod 13 \\
+$2^{6}$ Mod 13 \\
+64 Mod 13
+\section{Jacobi Symbol :}
+The Jacobi symbol is a generalization of the Legendre symbol, which can be used to simplify computations involving quadratic residues. It shares many of the properties of the Legendre symbol, and can be used to state and prove an extended version of the law of quadratic reciprocity. \\
+Jacobi Symbol (JS) $\Rightarrow$ Legendre Symbol (LS) \\
+Legendre Symbol (LS) doesn't implies Jacobi Symbol \\
+\includegraphics{images/diagram15.png}\\
+$P_k$ is distinct prime nos.\\
+(a/n) =  $\sum_{1}^{k} (a/P_i)^{ei}$
+
+Primality test can be classified into
+\begin{enumerate}
+    \item Deterministic ( prime with 100 percent true)
+    \item Probablistic (Composite then 100 percent true, prime then may or may not be true)
+\end{enumerate}
+To check prime (Primality Test)
+\begin{enumerate}
+    \item Sieve of Eratosthenes
+    \item Square Root Method
+    \item Mersenne Prime
+    \item Fermat's Prime
+    \item Solovay strassen Algorithm
+    \item Miller-Rabin Primality Test
+    
+\end{enumerate}
+\section{Sieve of Eratosthenes:}
+The sieve of Eratosthenes is one of the most efficient ways to find all primes smaller than n.
+\\Steps to find all the prime numbers less than or equal to a given integer n by the Eratosthene’s method:
+\begin{enumerate}
+    \item Create a list of consecutive integers from 2 to n: (2, 3, 4, …, n).
+    \item Initially, let p equal 2, the first prime number.
+    \item Starting from $p^{2}$, count up in increments of p and mark each of these numbers greater than or equal to $p^{2}$ itself in the list. These numbers will be p(p+1), p(p+2), p(p+3), etc..
+    \item Find the first number greater than p in the list that is not marked. If there was no such number, stop. Otherwise, let p now equal this number (which is the next prime), and repeat from step 3.
+\end{enumerate}
+
+\section{Fermat Primality Test:}
+\begin{enumerate}
+    \item Add odd integer, n $>$ 0
+    \item Choose random 'a', $\exists$ a $<$ n
+    \item If the GCD(a,n) $\neq$ 1
+    \\ Then n - not prime.
+    \item If $a^{n-1}$ MOD n $\neq$ 1
+    \\ Then n - composite.
+    \item If $a^{n-1}$ MOD n $=$ 1
+    \\ Then n - may be prime.
+\end{enumerate}
+\begin{ex}
+a = 4, n = 15
+\\ $a^{n-1}$ = 1 MOD 15
+\\ $4^{1}$ = 4 MOD 15
+\\ $4^{2}$ = 1 MOD 15
+\\ $4^{4}$ = 1 MOD 15
+\\ $4^{8}$ = 1 MOD 15
+\\ $4^{14}$ = $4^{2+4+8}$ = 1 MOD 15
+\end{ex}
+\section{Square Root Test:}
+Using Q.R MOD p
+\\ $x^{2}$ = a MOD p
+\\ $\sqrt a$ = +x, -x+p
+\begin{ex}
+3 in $Z_7$
+\\ $1^{2}$ MOD 7 = 1
+\\ $2^{2}$ MOD 7 = 4
+\\ $3^{2}$ MOD 7 = 2
+\\ $4^{2}$ MOD 7 = 2
+\\ $5^{2}$ MOD 7 = 4
+\\ $6^{2}$ MOD 7 = 1
+
+\end{ex}
+Square root of 1 MOD n is $\pm$ 1.
+\\ Square root of 1 MOD n is $\pm$ 1 , $\pm$ r, n is integer
+\\ P-primes $\longrightarrow$ 6n $\pm$ 1 For numbers greater than 3.
+\section{Solovay strassen Algorithm:}
+\begin{enumerate}
+    \item Start with an odd positive integer n.
+    \item Choose a random integer 'a' such that 1 < a < n-1.
+    \item If GCD(a,n) $\pm$ 1, then n composite.
+    \item Find x = (a/n)
+    \item Calculate j = $a^{(n-1)/2}$ MOD n
+    \item If j $\pm$ (a/n), then n is not prime.
+    \item If j = (a/n), then n may be prime.
+\end{enumerate}
+\begin{ex}
+n=15, a= 4
+\begin{enumerate}
+    \item n = 15
+    \item a = 4
+    \item GCD(4,15) = 1
+    \item x = 4/15
+    \item j = $4^{14/2}$ MOD 15
+    \\j = $4^{7}$ MOD 15
+    \\j = 4
+    \item j $\neq$ x. So, not prime
+\end{enumerate}
+\end{ex}
+\section{Miller Rabin Primality Test}
+Choose an odd integer n.
+\begin{enumerate}
+    \item Find integer k,q with k > 0, q $\in$ odd such that n-1 = $2^{k}$q
+    \item Select random integer a, such that a $\in$ (1,n-1)
+    \item If $a^{q}$Mod n = 1, then return "inconclusive".
+    \item Else for j=1 to k-1 do
+    \\if $a^{{2}^{j}q}$ MOD n = n-1 then return "Conclusive"
+    \\else return Composite
+\end{enumerate}
+\begin{ex}
+n=29
+\\1. n-1=28=$2^{2}.7$
+\\k=2,q=7
+\\2. Let a = 10, (1<a<28)
+\\3. $a^{q}$Mod n: $10^{7}$Mod 29=17
+\\n-may be prime
+\end{ex}
+\section{Carmicheal Number}
+pseudo prime
+\\ It is nothing a composite number 'n' that satisfies:
+\\n $\rightarrow$ $p^{n-1}$ $\equiv$ b MOD n
+\\ $\forall$ b,GCD(b,n) = 1
+\\n-1 = $\pi$ $p^{e_i}_i$ = (n-1)/(p-1) 
+\section{Factorization Algorithm}
+\subsection{Pollard P-1 Factoring Algorithm}
+\begin{lstlisting}
+    Given a number n.
+    Initialize a = 2, i = 2
+    Until a factor is returned do
+    a <- (a^i) mod n
+    d <- GCD(a-1, n)
+    if 1 < d < n then
+        return d
+    else
+        i <- i+1
+    Other factor, d' <- n/d
+    If d' is not prime
+        n <- d'
+        goto 1
+    else
+        d and d' are two prime factors. 
+\end{lstlisting}
+In this algorithm, the power of ‘a’ is continuously raised until a factor, ‘d’, of n is obtained. Once d is obtained, another factor, ‘d”, is n/d. If d’ is not prime, the same task is repeated for d’.
+\subsection{Pollard Rho factorizing Algorithm:}
+\includegraphics{images/diagram16.png}
 \end{document}
