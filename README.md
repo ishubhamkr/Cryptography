@@ -1,10 +1,10 @@
 # Cryptography
 
-# Cryptography is a method of protecting information and communications through the use of codes, 
-# so that only those for whom the information is intended can read and process it. 
+## Cryptography is a method of protecting information and communications through the use of codes, 
+## so that only those for whom the information is intended can read and process it. 
 
 
-#This repository contains pdf, latex and program files related to cryptographic modules.
+# This repository contains pdf, latex and program files related to cryptographic modules.
 -[Algebra](https://github.com/ishubhamkr/Cryptography/blob/main/Algebra.tex)
 -[Basic of Cryptography](https://github.com/ishubhamkr/Cryptography/blob/main/Cryptography_basics.pdf)
 -[Ceasar Cipher](https://github.com/ishubhamkr/Cryptography/blob/main/caesar%20cipher.zip)
